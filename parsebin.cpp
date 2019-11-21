@@ -4,7 +4,7 @@
 #include <iterator>
 #include <vector>
 #include <ctype.h>
-#include <regex>
+//#include <regex>
 
 std::pair<std::string, int> getstring(const char *buffer, int i, int min, int max)
 {
@@ -34,8 +34,9 @@ void parsebin(char *input, char *output)
     int length = is.tellg();
     is.seekg(0, is.beg);
 
+/*
     const std::regex rgx("(.)\\1{3}");
-    std::smatch match;
+    std::smatch match;*/
 
     char *buffer = new char[length];
     is.read(buffer, length);
@@ -45,9 +46,9 @@ void parsebin(char *input, char *output)
         if (isprint(buffer[i]))
 
         {
-            std::pair<std::string, int> pair = getstring(buffer, i, 5, 20);
+            std::pair<std::string, int> pair = getstring(buffer, i, 5, 150);
             i = pair.second;
-            if (pair.first.size() > 1 && !std::regex_search(pair.first, match, rgx)){
+            if (pair.first.size() > 1 /*&& !std::regex_search(pair.first, match, rgx)*/){
                 strings.push_back(pair.first);
             }
         }
@@ -67,6 +68,6 @@ void parsebin(char *input, char *output)
 
 int main()
 {
-    parsebin("avast", "output");
+    parsebin("/home/invasys.org/xroora/Desktop/platform-tools/all", "all_out");
     return 0;
 }
