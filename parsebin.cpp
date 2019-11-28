@@ -4,9 +4,9 @@
 #include <iterator>
 #include <vector>
 #include <ctype.h>
-//#include <regex>
+#include <string>
 
-std::pair<std::string, int> getstring(const char *buffer, int i, int min, int max)
+std::pair<std::string, int> getstring(const char *buffer, int i, const int min, const int max)
 {
     std::string str;
     while (isprint(buffer[i]) || isprint(buffer[i+1]))
@@ -22,7 +22,7 @@ std::pair<std::string, int> getstring(const char *buffer, int i, int min, int ma
     return std::make_pair("0", i);
 }
 
-void parsebin(char *input, char *output)
+void parsebin(const char *input, const char *output, const int min, const int max)
 {
     std::vector<std::string> strings;
     std::ofstream out;
@@ -34,10 +34,6 @@ void parsebin(char *input, char *output)
     int length = is.tellg();
     is.seekg(0, is.beg);
 
-/*
-    const std::regex rgx("(.)\\1{3}");
-    std::smatch match;*/
-
     char *buffer = new char[length];
     is.read(buffer, length);
     bool printable = false;
@@ -46,9 +42,9 @@ void parsebin(char *input, char *output)
         if (isprint(buffer[i]))
 
         {
-            std::pair<std::string, int> pair = getstring(buffer, i, 5, 150);
+            std::pair<std::string, int> pair = getstring(buffer, i, min, max);
             i = pair.second;
-            if (pair.first.size() > 1 /*&& !std::regex_search(pair.first, match, rgx)*/){
+            if (pair.first.size() > 1){
                 strings.push_back(pair.first);
             }
         }
@@ -66,8 +62,11 @@ void parsebin(char *input, char *output)
     delete[] buffer;
 }
 
-int main()
+int main(int argc,/*input output min max */ char * argv[])
 {
-    parsebin("/home/invasys.org/xroora/Desktop/platform-tools/all", "all_out");
+    int min, max;
+    sscanf(argv[3], "%d", &min);
+    sscanf(argv[4], "%d", &max);
+    parsebin(argv[1], argv[2], min, max);
     return 0;
 }
