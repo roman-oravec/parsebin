@@ -64,7 +64,7 @@ void parsebin(const char *input, const char *output, const int min, const int ma
 
 int main(int argc,/*input output min max */ char * argv[])
 {
-    int min, max;
+    int min, max; // Minimal and maximal length of the extracted strings
     sscanf(argv[3], "%d", &min);
     sscanf(argv[4], "%d", &max);
     parsebin(argv[1], argv[2], min, max);
