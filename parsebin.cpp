@@ -49,8 +49,6 @@ void parsebin(const char *input, const char *output, const int min, const int ma
             }
         }
     }
-    // Remove duplicates
-    strings.erase( unique(strings.begin(), strings.end()), strings.end());
 
     // Write strings to output file
     std::ostream_iterator<std::string> output_iterator(out, "\n");
